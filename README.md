@@ -7,11 +7,11 @@
 
 
 # 技术背景
-  `@vue/cli-service@4.x`下，配置了多页面（pages)，且自定义了splitChunks，splitChunks中有的包被分割了，分割后如`index~123.111.js`，`index~123.222.js`。
-  而`html-webpack-plugin@3.x`中，是判断 `pages.chunks.indexOf("index~123")===-1` 以过滤需要注入的chunk名。
+  `@vue/cli-service@4.x`下，配置了多页面（pages)，且自定义了splitChunks，splitChunks中有的包被分割了，分割后如`index~123.111.js`，`index~123.222.js`。其中`index~123`是chunkName
+  而`html-webpack-plugin@3.x`中，是判断 `includedChunks.indexOf(chunkName)===-1` 以过滤需要注入的chunk名。
 
 # 问题
-  由于`index~123`中`123`是动态不确定的，故无法在pages中配置准确chunks，导致生产构建后无法想html注入script标签。
+  由于`index~123`中`123`是动态不确定的，在配置pages时无法获取splitChunks后的动态chunkName，导致生产构建后无法向html注入script标签。
 
 # 解决方案
   1. 据说升级html-webpack-plugin到4或5可解决这个问题（实测更多屁事，根本解决不完），
