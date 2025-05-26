@@ -21,9 +21,10 @@ class DynamicChunksPlugin {
     // 注册compilation钩子HtmlWebpackPlugin 3
     compiler.hooks.compilation.tap('DynamicChunksPlugin', compilation => {
       compilation.hooks.htmlWebpackPluginBeforeHtmlGeneration.tapAsync('DynamicChunksPlugin', (data, cb) => {
+        const plugin = data.plugin // HtmlWebpackPlugin实例
+
         const allowChunks = plugin.options.chunks // vue.config.js 中pages配置的
 
-        const plugin = data.plugin // HtmlWebpackPlugin实例
         const allChunks = compilation.getStats().toJson().chunks
         // 过滤需要的chunks
         let chunks = allChunks.filter(chunk => chunk.names.some(name => allowChunks.some(v => name.includes(v))))
