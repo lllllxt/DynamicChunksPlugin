@@ -43,4 +43,4 @@ class DynamicChunksPlugin {
   }
 }
 
-module.export = DynamicChunksPlugin
+module.exports = DynamicChunksPlugin
